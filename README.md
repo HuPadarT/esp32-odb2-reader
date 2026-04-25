@@ -43,13 +43,13 @@ A fizikai műszer megépítéséhez az alábbi komponensek szükségesek:
 ---
 
 ## Forráskód
+```cpp
 //C++
 // MVVM design pattern, SOLID, Clean Code
 #include <Wire.h>
 #include <U8g2lib.h>
 #include <BluetoothSerial.h>
 
-// --- KONSTANSOK ÉS PIN-EK (A te "Nested Routing" kiosztásod) ---
 const int BTN_NEXT = 5;  // bal oldali v. felső gomb (Lapozás)
 const int BTN_YES = 18;  // Középső gomb (Igen)
 const int BTN_NO = 23;   // jobb oldali v. alsó gomb (Mégse)
@@ -150,7 +150,6 @@ void readButtons()
         }
       }
     }
-    
     lastButtonStates[i] = reading;
   }
 }
@@ -163,7 +162,6 @@ void processButtonPress(int buttonPin)
     if (currentMenuState < 4)
     {
       currentMenuState = (currentMenuState + 1) % 4;
-      
       updateDisplay();
     }
     else if (currentMenuState == 5)
@@ -172,7 +170,6 @@ void processButtonPress(int buttonPin)
       if (dtcCount > 0)
       {
         currentDtcIndex = (currentDtcIndex + 1) % dtcCount;
-        
         updateDisplay();
       }
     }
@@ -186,7 +183,6 @@ void processButtonPress(int buttonPin)
       {
         currentMenuState = 5;
         currentDtcIndex = 0;
-        
         updateDisplay();
       }
     }
@@ -200,14 +196,12 @@ void processButtonPress(int buttonPin)
       
       dtcCount = 0;
       currentMenuState = 3;
-      
       updateDisplay();
     }
     else if (currentMenuState == 5)
     {
       // Egyedi törlés megerősítő képernyője
       currentMenuState = 6;
-      
       updateDisplay();
     }
     else if (currentMenuState == 6)
@@ -217,7 +211,6 @@ void processButtonPress(int buttonPin)
       {
         dtcList[i] = dtcList[i + 1];
       }
-      
       dtcCount--;
       
       if (dtcCount == 0)
@@ -230,10 +223,8 @@ void processButtonPress(int buttonPin)
         {
           currentDtcIndex = 0;
         }
-        
         currentMenuState = 5;
       }
-      
       updateDisplay();
     }
   }
@@ -245,7 +236,6 @@ void processButtonPress(int buttonPin)
       if (dtcCount > 0)
       {
         currentMenuState = 4;
-        
         updateDisplay();
       }
     }
@@ -253,28 +243,24 @@ void processButtonPress(int buttonPin)
     {
       // Mégsem töröljük az összeset
       currentMenuState = 3;
-      
       updateDisplay();
     }
     else if (currentMenuState == 5)
     {
       // Vissza a DTC listából a DTC összegzőre
       currentMenuState = 3;
-      
       updateDisplay();
     }
     else if (currentMenuState == 6)
     {
       // Mégsem töröljük az egyedit
       currentMenuState = 5;
-      
       updateDisplay();
     }
     else if (currentMenuState == 1 || currentMenuState == 2)
     {
       // Visszaugrás a Hibrid/TPMS képernyőről a Főképernyőre
       currentMenuState = 0;
-      
       updateDisplay();
     }
   }
@@ -285,19 +271,13 @@ void handleBluetoothData()
   if (SerialBT.available() > 0)
   {
     String incoming = SerialBT.readStringUntil('\n');
-    
     incoming.trim();
-    
     if (incoming.startsWith("41 05"))
     {
       String hexVal = incoming.substring(6, 8);
-      
       long decimalVal = strtol(hexVal.c_str(), NULL, 16);
-      
       batteryTemp = decimalVal - 40;
-      
-      hasData = true;
-      
+      hasData = true;      
       updateDisplay();
     }
   }
@@ -404,7 +384,4 @@ void updateDisplay()
   }
   while (u8g2.nextPage());
 }
-
-```cpp
-// IDE ILLLESZD BE A VÉGLEGES FORRÁSKÓDOT
-// Másold be ide a kódot, és a fenti és lenti "```" jelek gondoskodnak a színezésről!
+```
