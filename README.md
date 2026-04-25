@@ -6,10 +6,10 @@ Ez a projekt egy egyedi építésű, hardveres telemetria kijelző, amely kifeje
 A műszer egy 4 állású, nyomógombokkal vezérelhető (MVVM architektúrájú) menürendszerrel rendelkezik. Fő funkciói közé tartozik a hibrid akkumulátor hőmérsékletének valós idejű megjelenítése, a TPMS (guminyomás) adatok kerekenkénti monitorozása (2 tizedesjegy pontossággal), valamint a jármű hibakódjainak (DTC) olvasása és törlése. A fizikai megvalósítás fókuszában a megbízhatóság és a "Clean Code" analógiájára épülő, kereszteződésmentes nyáklap-tervezés (*Nested Routing*) állt.
 
 ### Képernyőképek
-![TinkerCAD Szimuláció](1000002999.jpg)
+![TinkerCAD Szimuláció](2026-04-13_17h31_15.png)
 *Logikai szimuláció a TinkerCAD környezetben*
 
-![Valós Eszköz](2026-04-13_17h31_15.png)
+![Valós Eszköz](1000002999.jpg)
 *A megépített fizikai hardver az OLED kijelzővel*
 
 ---
