@@ -41,6 +41,23 @@ A fizikai műszer megépítéséhez az alábbi komponensek szükségesek:
 * **1 db** ELM327 Bluetooth OBD2 olvasó adapter (A gépjármű diagnosztikai portjához)
 
 ---
+## Változók:
+* const int BTN_NEXT, BTN_YES, BTN_NO: Konstansok, a Lapozás (5), Igen (18) és Mégse (23) gombok PIN kódjai,
+* const int buttonPins[]: Egy tömb, ami összefogja a három gomb lábkiosztását,
+* u8g2 és SerialBT: az OLED kijelző és a Bluetooth rádió külső függőségeinek objektum példányai,
+* int currentMenuState: A menürendszer épp melyik menüjén állunk,
+* bool isConnected: felépült-e a Bluetooth kapcsolat az ELM327 adapterrel,
+* float tpmsFL, tpmsFR, tpmsRL, tpmsRR: a négy kerék (Bal-Első, Jobb-Első, Bal-Hátsó, Jobb-Hátsó) nyomásértékeinek tárolására,
+* String dtcList[]: Egy 9 férőhelyes szöveges (String) memóriatömb, amibe a kiolvasott hibakódok tárolására,
+* int dtcCount: aktuálisan hány darab olvasott hibakód várakozik a dtcList tömbben,
+* int currentDtcIndex: Lista-mutató (index), a fenti listából melyiket kell mutatni a kijelzőn,
+* bool buttonStates[]: Logikai tömb, a 3 gomb letisztított, már pergésmentesített (tehát ténylegesen érvényes) állapotát tárolja,
+* bool lastButtonStates[]: Logikai tömb, a gombok legutóbbi fizikai állapotát rögzíti, hogy az állapotgép érzékelni tudja a lenyomás (él) pillanatát,
+* unsigned long lastDebounceTimes[]: Hatalmas számokat tároló "stopperórák", a 3 gomb utolsó feszültség-változásának pontos ezredmásodperce,
+* unsigned long debounceDelay: a pergésmentesítéshez szükséges kötelező türelmi idő milliszekundumban,
+* float batteryTemp: az OBD2-ből kinyert és dekódolt hibrid akkumulátor hőmérsékletét tárolja Celsius fokban,
+* bool hasData: ez jelzi a kijelzőnek, hogy megérkezett-e már az első sikeres adatcsomag (amíg hamis, kötőjeleket mutat).
+---
 
 ## Forráskód
 ```cpp
