@@ -3,7 +3,7 @@
 ## Projekt leírása
 Ez a projekt egy egyedi építésű, hardveres telemetria kijelző, amely kifejezetten a Lexus NX300h hibrid járművekhez készült. Az eszköz egy ESP32 mikrokontrollerre épül, és Bluetooth kapcsolaton keresztül, Master (Mester) módban kommunikál az autóba csatlakoztatott ELM327 OBD2 diagnosztikai adapterrel. 
 
-A műszer egy 4 állású, nyomógombokkal vezérelhető (MVVM architektúrájú) menürendszerrel rendelkezik. Fő funkciói közé tartozik a hibrid akkumulátor hőmérsékletének valós idejű megjelenítése, a TPMS (guminyomás) adatok kerekenkénti monitorozása (2 tizedesjegy pontossággal), valamint a jármű hibakódjainak (DTC) olvasása és törlése. A fizikai megvalósítás fókuszában a megbízhatóság és a "Clean Code" analógiájára épülő, kereszteződésmentes nyáklap-tervezés (*Nested Routing*) állt.
+A műszer egy 4 állású, nyomógombokkal vezérelhető (MVVM architektúrájú) menürendszerrel rendelkezik. Fő funkciói közé tartozik a hibrid akkumulátor hőmérsékletének valós idejű megjelenítése, a TPMS (guminyomás) adatok kerekenkénti monitorozása (2 tizedesjegy pontossággal), valamint a jármű hibakódjainak (DTC) olvasása és törlése.
 
 ### Képernyőképek
 ![TinkerCAD Szimuláció](2026-04-13_17h31_15.png)
@@ -22,11 +22,11 @@ A projekt logikai szimulációja és a menürendszer alapjainak tesztelése a Ti
 ---
 
 ## Eltérés a TinkerCAD és a fizikai megépítés között
-Mivel a TinkerCAD környezet limitált hardveres szimulációs képességekkel rendelkezik, a logikai modell és a valós, megépített műszer között az alábbi kritikus mérnöki eltérések vannak:
+Mivel a TinkerCAD környezet limitált hardveres szimulációs képességekkel rendelkezik, a logikai modell és a valós, megépített műszer között az alábbi kritikus eltérések vannak:
 
 1. **A Mikrokontroller:** A TinkerCAD szimulációban egy szabványos **Arduino Uno** futtatja a kódot, míg a fizikai megépítéshez egy sokkal erősebb, beépített rádióval rendelkező **ESP32 (Lolin32 Lite klón)** lett felhasználva.
-2. **Az Adatkapcsolat (Bluetooth vs. Serial):** A szimulátorban a gépjármű (OBD2) válaszait a Soros Monitoron (Serial) keresztüli manuális karakter-beküldés helyettesíti. A valós eszközben egy dedikált `BluetoothSerial` kapcsolat fut, amely MAC-cím alapú azonosítással és PIN-kóddal csatlakozik az ELM327 adapterhez.
-3. **Lábkiosztás és I2C Routing:** A szimulátor alapértelmezett digitális lábakat használ. A valós nyomtatott áramkörön a rövidzárlatok elkerülése és az optimális ón-ösvények (Solder Bridging) kialakítása érdekében egyedi lábkiosztást alkalmaztunk. A nyomógombok a *Nested Routing* elv alapján az ESP32 `5`, `18`, és `23`-as lábaira kerültek, a kijelző pedig Szoftveres I2C-vel (`19` SCK, `22` SDA) csatlakozik, áthidalva a fizikai kereszteződéseket.
+2. **Az Adatkapcsolat (Bluetooth vs. Serial):** A szimulátorban a gépjármű (OBD2) válaszait a Soros Monitoron (Serial) keresztüli manuális karakter-beküldés helyettesíti. A valós eszközben egy dedikált `BluetoothSerial` kapcsolat fut, amely név alapú azonosítással és PIN-kóddal csatlakozik az ELM327 adapterhez.
+3. **Lábkiosztás és I2C Routing:** A szimulátor alapértelmezett digitális lábakat használ. A valós nyomtatott áramkörön a rövidzárlatok elkerülése és az optimális ón-ösvények (Solder Bridging) kialakítása érdekében eltérő lábkiosztást alkalmaztunk. A nyomógombok a *Nested Routing* elv alapján az ESP32 `5`, `18`, és `23`-as lábaira kerültek, a kijelző pedig Szoftveres I2C-vel (`19` SCK, `22` SDA) csatlakozik, áthidalva a fizikai kereszteződéseket.
 
 ---
 
