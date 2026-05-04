@@ -17,7 +17,7 @@ A műszer egy 4 állású, nyomógombokkal vezérelhető (MVVM architektúrájú
 ## Projekt elérhetősége
 A projekt logikai szimulációja és a menürendszer alapjainak tesztelése a TinkerCAD platformon készült.
 
-* **TinkerCAD Projekt:** [Kattints ide a szimuláció megtekintéséhez]([ide_jon_a_tinkercad_link_urlje](https://www.tinkercad.com/things/gCaSdsdhM4q-arduino-odb2-reader)
+* **TinkerCAD Projekt:** [Kattints ide a szimuláció megtekintéséhez](https://www.tinkercad.com/things/gCaSdsdhM4q-arduino-odb2-reader)
 
 ---
 
