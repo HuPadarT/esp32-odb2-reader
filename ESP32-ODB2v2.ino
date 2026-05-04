@@ -22,10 +22,10 @@ int currentMenuState = 0;
 bool isConnected = false;
 
 // TPMS Adatok
-float tpmsFL = 2.19; // Bal Első
-float tpmsFR = 2.28; // Jobb Első
-float tpmsRL = 2.26; // Bal Hátsó
-float tpmsRR = 2.23; // Jobb Hátsó
+float tpmsFL = 0.00; // Bal Első
+float tpmsFR = 0.00; // Jobb Első
+float tpmsRL = 0.00; // Bal Hátsó
+float tpmsRR = 0.00; // Jobb Hátsó
 
 // DTC Adatok
 String dtcList[9] = {"", ""};
