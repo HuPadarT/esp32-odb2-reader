@@ -101,7 +101,7 @@ void pollObdData()
 			switch (currentMenuState)
 			{
 				case 1:
-					SerialBT.println("21 98");
+					SerialBT.println("01 05"); // motor hőmérséklet
 					break;
 					
 				case 2:
@@ -286,12 +286,13 @@ void handleBluetoothData()
 			cleanInput.replace("\r", "");
 			cleanInput.replace("\n", "");
 			
-			// --- 1. HIBRID AKKU (7EA21) KERESÉSE ---
-			int batPos = cleanInput.indexOf("7EA21");
+			// --- 1. HŐMÉRSÉKLET (4105) KERESÉSE ---
+			int batPos = cleanInput.indexOf("4105");
 			
-			if (batPos != -1 && cleanInput.length() >= batPos + 9)
+			if (batPos != -1 && cleanInput.length() >= batPos + 6)
 			{
-				String hexVal = cleanInput.substring(batPos + 7, batPos + 9);
+				// A "4105" 4 karakter hosszú, utána jön rögtön a 2 karakteres adat
+				String hexVal = cleanInput.substring(batPos + 4, batPos + 6);
 				long decimalVal = strtol(hexVal.c_str(), NULL, 16);
 				batteryTemp = (int)decimalVal - 40;
 				hasData = true;
@@ -388,7 +389,7 @@ void updateDisplay()
 		case 1:
 			if (hasData)
 			{
-				tempStr = "Bat Temp: " + String(batteryTemp, 0) + " C";
+				tempStr = "Eng Temp: " + String(batteryTemp, 0) + " C";
 			}
 			break;
 			
