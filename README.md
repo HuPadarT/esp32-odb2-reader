@@ -1,9 +1,9 @@
 # Lexus NX300h OBD2 / TPMS Telemetria Kijelző
 
 ## Projekt leírása
-Ez a projekt egy egyedi építésű, hardveres telemetria kijelző, amely kifejezetten a Lexus NX300h hibrid járművekhez készült. Az eszköz egy ESP32 mikrokontrollerre épül, és Bluetooth kapcsolaton keresztül, Master (Mester) módban kommunikál az autóba csatlakoztatott ELM327 OBD2 diagnosztikai adapterrel. 
+Ez a projekt egy egyedi építésű, hardveres telemetria kijelző, amely kifejezetten a Lexus NX300h járművekhez készült. Az eszköz egy ESP32 mikrokontrollerre épül, és Bluetooth kapcsolaton keresztül, Master (Mester) módban kommunikál az autóba csatlakoztatott ELM327 OBD2 diagnosztikai adapterrel. 
 
-A műszer egy 4 állású, nyomógombokkal vezérelhető (MVVM architektúrájú) menürendszerrel rendelkezik. Fő funkciói közé tartozik a hibrid akkumulátor hőmérsékletének valós idejű megjelenítése, a TPMS (guminyomás) adatok kerekenkénti monitorozása (2 tizedesjegy pontossággal), valamint a jármű hibakódjainak (DTC) olvasása és törlése.
+A műszer egy 4 állású, nyomógombokkal vezérelhető (MVVM architektúrájú) menürendszerrel rendelkezik. Fő funkciói közé tartozik a motor akkumulátor hőmérsékletének valós idejű megjelenítése, a TPMS (guminyomás) adatok kerekenkénti monitorozása (2 tizedesjegy pontossággal), valamint a jármű hibakódjainak (DTC) olvasása és törlése. Tervben van a hibrid rendszer monitorozása is, de ahhoz a jelenlegi bluetooth ELM327 nem megfelelő.
 
 ### Képernyőképek
 ![TinkerCAD Szimuláció](2026-04-13_17h31_15.png)
@@ -55,7 +55,7 @@ A fizikai műszer megépítéséhez az alábbi komponensek szükségesek:
 * bool lastButtonStates[]: Logikai tömb, a gombok legutóbbi fizikai állapotát rögzíti, hogy az állapotgép érzékelni tudja a lenyomás (él) pillanatát,
 * unsigned long lastDebounceTimes[]: Hatalmas számokat tároló "stopperórák", a 3 gomb utolsó feszültség-változásának pontos ezredmásodperce,
 * unsigned long debounceDelay: a pergésmentesítéshez szükséges kötelező türelmi idő milliszekundumban,
-* float batteryTemp: az OBD2-ből kinyert és dekódolt hibrid akkumulátor hőmérsékletét tárolja Celsius fokban,
+* float batteryTemp: az OBD2-ből kinyert és dekódolt hibrid akkumulátor (jelen verzióban csak a belsőégésű motor) hőmérsékletét tárolja Celsius fokban,
 * bool hasData: ez jelzi a kijelzőnek, hogy megérkezett-e már az első sikeres adatcsomag (amíg hamis, kötőjeleket mutat).
 * String obdBuffer: buffer a beérkező adatokhoz az aszinkron feldolgozás miatt
 ---
@@ -165,7 +165,7 @@ void pollObdData()
 			switch (currentMenuState)
 			{
 				case 1:
-					SerialBT.println("21 98");
+					SerialBT.println("01 05"); // motor hőmérséklet
 					break;
 					
 				case 2:
@@ -350,12 +350,13 @@ void handleBluetoothData()
 			cleanInput.replace("\r", "");
 			cleanInput.replace("\n", "");
 			
-			// --- 1. HIBRID AKKU (7EA21) KERESÉSE ---
-			int batPos = cleanInput.indexOf("7EA21");
+			// --- 1. HŐMÉRSÉKLET (4105) KERESÉSE ---
+			int batPos = cleanInput.indexOf("4105");
 			
-			if (batPos != -1 && cleanInput.length() >= batPos + 9)
+			if (batPos != -1 && cleanInput.length() >= batPos + 6)
 			{
-				String hexVal = cleanInput.substring(batPos + 7, batPos + 9);
+				// A "4105" 4 karakter hosszú, utána jön rögtön a 2 karakteres adat
+				String hexVal = cleanInput.substring(batPos + 4, batPos + 6);
 				long decimalVal = strtol(hexVal.c_str(), NULL, 16);
 				batteryTemp = (int)decimalVal - 40;
 				hasData = true;
@@ -452,7 +453,7 @@ void updateDisplay()
 		case 1:
 			if (hasData)
 			{
-				tempStr = "Bat Temp: " + String(batteryTemp, 0) + " C";
+				tempStr = "Eng Temp: " + String(batteryTemp, 0) + " C";
 			}
 			break;
 			
