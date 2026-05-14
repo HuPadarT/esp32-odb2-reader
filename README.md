@@ -30,6 +30,17 @@ Mivel a TinkerCAD környezet limitált hardveres szimulációs képességekkel r
 
 ---
 
+## Működése
+A bekapcsolás után (usb kábel csatlakoztatása, vagy reset gomb - a panel bal oldalán a 2 csatlakozó között - megnyomása után) az eszköz megpróbál bluetooth kapcsolaton keresztül csatlakozni az autóra csatlakoztatott ELM327-hez. 
+Amennyiben a csatlakozás sikeres, akkor a képernyőn kiírja, hogy a csatlakozás sikerült, különben azt, hogy nem sikerült. 
+A képernyő alatti bal szélső gombbal (nevezzük 1-esnek) a megjelenítő kijelzőjén lapozhatunk a megjelenített oldalak között:
+* kezdő képernyő, 
+* motor hőmérséklet adatok, 
+* guminyomás értékek, 
+* hibakódok. 
+	
+A hibakódok menüpontnál, amennyiban vannak, akkor lesz használható a másik két gomb is. Amennyiben törölni szeretnénk a listát, akkor azt a jobb szélső (3-as) gombbal tudjuk kezdeményezni, ha a megerősítő kérdése igen-t nyomunk (2-es gomb). Ha azonban szeretnékn megnézni a hibakódokat, akkor a középső (2-es) gombot megnyomva belép a hibakódok listájába, itt a listában lévő elemek között lapozhatunk az 1-es gombbal, vagy vissza léphetünk a 4. fő képernyőre (hibakódok külső nézet) a 3-as gombbal, ekkor ismét a fő képernyők között tudunk váltani (1-es gomb). Ha azonban a listában egy hibakódon állva megnyomjuk a 2-es gombot, akkor egy kérdés jelenik meg, hogy biztosan törölni akarjuk-e a hibakódokat, 2-es gombra töröljük, a 3-as gombra nem töröljük, visszatérünk a hibalista éppen aktuális eleméhez és folytathatjuk a hibakódok böngészését.
+
 ## Alkatrész lista
 A fizikai műszer megépítéséhez az alábbi komponensek szükségesek:
 
